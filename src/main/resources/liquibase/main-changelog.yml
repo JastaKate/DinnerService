@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: dinners
+      author: Kate
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: dinners
+      changes:
+        - createTable:
+            tableName: dinners
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  autoIncrement: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+            ifNotExists: true
+            schemaName: public
+        - createTable:
+            tableName: ingredients
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                  autoIncrement: true
+              - column:
+                  name: product
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dinner_id
+                  type: integer
+                  constraints:
+                    nullable: false
+            ifNotExists: true
+            schemaName: public
+  - changeSet:
+      id: dinners1
+      author: Kate
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: ingredients
+            baseColumnNames: dinner_id
+            referencedTableName: dinners
+            referencedColumnNames: id
+            constraintName: dinners_ingredients_fk

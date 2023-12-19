@@ -1,1 +1,12 @@
+server:
+  port: 8091
 
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 5744
+    url: jdbc:postgresql://localhost:5433/dinners
+    username: postgres
+
+  liquibase:
+    change-log: classpath:liquibase/main-changelog.yml
